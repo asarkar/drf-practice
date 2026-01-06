@@ -32,7 +32,7 @@ class TaskViewSet(viewsets.ModelViewSet[Task]):
         # Filter by completion status if provided
         completed = self.request.query_params.get("completed", None)
         if completed is not None:
-            com = completed.lower() == "true"
-            qs = qs.filter(completed=com)
+            is_completed = completed.lower() == "true"
+            qs = qs.filter(completed=is_completed)
 
         return qs

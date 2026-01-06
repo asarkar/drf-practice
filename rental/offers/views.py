@@ -9,7 +9,7 @@ from .serializers import OfferSerializer, UserSerializer
 User = get_user_model()
 
 
-class OfferList(generics.ListCreateAPIView[Offer]):
+class OfferListView(generics.ListCreateAPIView[Offer]):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -18,7 +18,7 @@ class OfferList(generics.ListCreateAPIView[Offer]):
         serializer.save(author=self.request.user)
 
 
-class OfferDetails(generics.RetrieveUpdateDestroyAPIView[Offer]):
+class OfferDetailView(generics.RetrieveUpdateDestroyAPIView[Offer]):
     queryset = Offer.objects.all()
     serializer_class = OfferSerializer
     # IsAuthenticatedOrReadOnly implements has_permission() - checked before fetching the object
@@ -30,11 +30,11 @@ class OfferDetails(generics.RetrieveUpdateDestroyAPIView[Offer]):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
 
-class UserList(generics.ListAPIView):  # type: ignore[type-arg]
+class UserListView(generics.ListAPIView):  # type: ignore[type-arg]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetails(generics.RetrieveAPIView):  # type: ignore[type-arg]
+class UserDetailView(generics.RetrieveAPIView):  # type: ignore[type-arg]
     queryset = User.objects.all()
     serializer_class = UserSerializer

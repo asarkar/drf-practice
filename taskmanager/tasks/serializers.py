@@ -1,35 +1,45 @@
+from typing import Any
+
 from rest_framework import serializers
 
 from .models import Task
 
 
-class AbstractTaskSerializer(serializers.ModelSerializer[Task]):
-    """Abstract base serializer for tasks."""
+class BaseTaskSerializer(serializers.ModelSerializer[Task]):
+    """Base serializer for tasks with common fields.
+
+    This class cannot be instantiated directly - use a concrete subclass.
+    """
 
     class Meta:
         model = Task
         fields = ["title", "description", "priority", "completed"]
-        abstract = True
+
+    def __new__(cls, *args: Any, **kwargs: Any) -> BaseTaskSerializer:
+        if cls is BaseTaskSerializer:
+            raise TypeError(f"{cls.__name__} cannot be instantiated directly")
+        # Let DRF handle many=True (returns ListSerializer) and other special cases
+        return super().__new__(cls, *args, **kwargs)
 
 
-class TaskSerializer(AbstractTaskSerializer):
+class TaskSerializer(BaseTaskSerializer):
     """Serializer for the Task model."""
 
-    class Meta(AbstractTaskSerializer.Meta):
-        fields = ["id", *AbstractTaskSerializer.Meta.fields, "created_at", "updated_at"]
+    class Meta(BaseTaskSerializer.Meta):
+        fields = ["id", *BaseTaskSerializer.Meta.fields, "created_at", "updated_at"]
         read_only_fields = ["id", "created_at", "updated_at"]
 
 
-class TaskCreateSerializer(AbstractTaskSerializer):
+class TaskCreateSerializer(BaseTaskSerializer):
     """Serializer for creating tasks."""
 
     pass
 
 
-class TaskUpdateSerializer(AbstractTaskSerializer):
+class TaskUpdateSerializer(BaseTaskSerializer):
     """Serializer for updating tasks."""
 
-    class Meta(AbstractTaskSerializer.Meta):
+    class Meta(BaseTaskSerializer.Meta):
         extra_kwargs = {
             "title": {"required": False},
             "description": {"required": False},

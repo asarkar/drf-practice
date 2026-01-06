@@ -47,7 +47,7 @@ class Question(Updated):
         (0, _("Fundamental")),
         (1, _("Beginner")),
         (2, _("Intermediate")),
-        (2, _("Advanced")),
+        (3, _("Advanced")),
         (4, _("Expert")),
     )
 
@@ -57,7 +57,7 @@ class Question(Updated):
     technique = models.IntegerField(_("Type of Question"), choices=TYPE, default=0)
     title = models.CharField(_("Title"), max_length=255)
     difficulty = models.IntegerField(_("Difficulty"), choices=SCALE, default=0)
-    date_created = models.DateTimeField("Date Created", auto_now_add=True)
+    date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
     is_active = models.BooleanField(_("Active Status"), default=True)
 
     def __str__(self) -> str:

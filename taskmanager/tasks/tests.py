@@ -27,7 +27,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_list_tasks(self) -> None:
         """Test listing all tasks."""
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -42,7 +42,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_list_tasks_filter_completed_true(self) -> None:
         """Test filtering tasks by completed=true."""
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         response = self.client.get(url, {"completed": "true"})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -52,7 +52,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_list_tasks_filter_completed_false(self) -> None:
         """Test filtering tasks by completed=false."""
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         response = self.client.get(url, {"completed": "false"})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -62,7 +62,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_retrieve_task(self) -> None:
         """Test retrieving a single task."""
-        url = reverse("task-detail", kwargs={"pk": self.task1.pk})
+        url = reverse("tasks:task-detail", kwargs={"pk": self.task1.pk})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -75,7 +75,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_create_task(self) -> None:
         """Test creating a new task."""
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         data = {
             "title": "New Task",
             "description": "New Description",
@@ -90,7 +90,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_create_task_priority_validation_too_low(self) -> None:
         """Test that priority below 1 is rejected."""
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         data = {"title": "Invalid Task", "priority": 0}
         response = self.client.post(url, data)
 
@@ -99,7 +99,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_create_task_priority_validation_too_high(self) -> None:
         """Test that priority above 5 is rejected."""
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         data = {"title": "Invalid Task", "priority": 6}
         response = self.client.post(url, data)
 
@@ -108,7 +108,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_update_task(self) -> None:
         """Test full update of a task."""
-        url = reverse("task-detail", kwargs={"pk": self.task1.pk})
+        url = reverse("tasks:task-detail", kwargs={"pk": self.task1.pk})
         data = {
             "title": "Updated Task",
             "description": "Updated Description",
@@ -125,7 +125,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_partial_update_task(self) -> None:
         """Test partial update of a task."""
-        url = reverse("task-detail", kwargs={"pk": self.task1.pk})
+        url = reverse("tasks:task-detail", kwargs={"pk": self.task1.pk})
         data = {"completed": True}
         response = self.client.patch(url, data)
 
@@ -136,7 +136,7 @@ class TaskViewSetTests(APITestCase):
 
     def test_delete_task(self) -> None:
         """Test deleting a task."""
-        url = reverse("task-detail", kwargs={"pk": self.task1.pk})
+        url = reverse("tasks:task-detail", kwargs={"pk": self.task1.pk})
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -147,7 +147,7 @@ class TaskViewSetTests(APITestCase):
         """Test retrieving a task that doesn't exist."""
         import uuid
 
-        url = reverse("task-detail", kwargs={"pk": uuid.uuid4()})
+        url = reverse("tasks:task-detail", kwargs={"pk": uuid.uuid4()})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -158,7 +158,7 @@ class TaskViewSetTests(APITestCase):
         from datetime import datetime
 
         fake_id = uuid.uuid4()
-        url = reverse("task-list")
+        url = reverse("tasks:task-list")
         data = {
             "id": str(fake_id),
             "title": "New Task",
@@ -187,7 +187,7 @@ class TaskViewSetTests(APITestCase):
         original_created_at = self.task1.created_at
         fake_id = uuid.uuid4()
 
-        url = reverse("task-detail", kwargs={"pk": self.task1.pk})
+        url = reverse("tasks:task-detail", kwargs={"pk": self.task1.pk})
         data = {
             "id": str(fake_id),
             "title": "Updated Task",
@@ -214,7 +214,7 @@ class TaskViewSetTests(APITestCase):
         original_created_at = self.task1.created_at
         fake_id = uuid.uuid4()
 
-        url = reverse("task-detail", kwargs={"pk": self.task1.pk})
+        url = reverse("tasks:task-detail", kwargs={"pk": self.task1.pk})
         data = {
             "id": str(fake_id),
             "created_at": "2020-01-01T00:00:00Z",

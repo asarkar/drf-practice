@@ -10,13 +10,13 @@ This repository contains practice code for various Django REST Framework applica
 
 A Quiz API based on the [Django REST Framework Quiz API](https://youtu.be/8QLCaye3YjQ) YouTube tutorial.
 
-**Key concepts:**
+**Key Concepts:**
 * Generic class-based views
 * Nested serializers for related objects
 * Translation
-* Edit models on the same page as a parent model (`InlineModelAdmin` objects)
+* Inline model editing (`InlineModelAdmin` objects)
 
-## API Endpoints
+**API Endpoints:**
 
 | Method | Endpoint           | Description                           |
 |--------|--------------------|---------------------------------------|
@@ -28,21 +28,45 @@ A Quiz API based on the [Django REST Framework Quiz API](https://youtu.be/8QLCay
 
 A rental platform API based on the tutorial [Building APIs With Django REST Framework](https://www.jetbrains.com/help/pycharm/building-apis-with-django-rest-framework.html).
 
-**Key concepts:**
+**Key Concepts:**
 * Generic class-based views
 * Nested serializers for related objects
 * User authentication and authorization
 * Custom permissions
 
+**API Endpoints:**
+
+| Method | Endpoint         | Description                                      |
+|--------|------------------|--------------------------------------------------|
+| GET    | `/offers/`       | List all offers                                  |
+| POST   | `/offers/`       | Create a new offer (authenticated users only)    |
+| GET    | `/offers/<id>/`  | Retrieve an offer                                |
+| PUT    | `/offers/<id>/`  | Update an offer (author only)                    |
+| PATCH  | `/offers/<id>/`  | Partially update an offer (author only)          |
+| DELETE | `/offers/<id>/`  | Delete an offer (author only)                    |
+| GET    | `/users/`        | List all users                                   |
+| GET    | `/users/<id>/`   | Retrieve a user                                  |
+
 ### taskmanager
 
 A task management API based on the tutorial [Building Web APIs with Django Rest Framework: A Beginner's Guide](https://betterstack.com/community/guides/scaling-python/introduction-to-drf/).
 
-**Key concepts:**
+**Key Concepts:**
 * Model-level validation
 * Different serializers for different actions (create, update, read)
 * Filtering via query parameters
 * Pagination
+
+**API Endpoints:**
+
+| Method | Endpoint             | Description                                          |
+|--------|----------------------|------------------------------------------------------|
+| GET    | `/api/tasks/`        | List all tasks (supports `?completed=true/false`)    |
+| POST   | `/api/tasks/`        | Create a new task                                    |
+| GET    | `/api/tasks/<id>/`   | Retrieve a task                                      |
+| PUT    | `/api/tasks/<id>/`   | Update a task                                        |
+| PATCH  | `/api/tasks/<id>/`   | Partially update a task                              |
+| DELETE | `/api/tasks/<id>/`   | Delete a task                                        |
 
 ## Development
 
